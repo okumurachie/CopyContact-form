@@ -30,7 +30,7 @@
     margin: 0 auto;
     width: 445px;
     height: 396px;
-    padding-top: 60px;
+    padding-top: 80px;
     display: flex;
     flex-direction: column;
 }
@@ -38,6 +38,9 @@
     width: 100%;
     height: 102px;
     margin-bottom: 30px;
+}
+.form__group-title{
+    margin-bottom: 15px;
 }
 .form__label--item{
     width: 75px;

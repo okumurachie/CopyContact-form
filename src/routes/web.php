@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [ContactController::class, 'index'])->name('contact.form');
+Route::get('/confirm', [ContactController::class, 'showConfirmForm']);
+Route::post('/confirm', [ContactController::class, 'confirm'])->name('confirm');
+Route::post('/send', [ContactController::class, 'send'])->name('send');
+Route::get('thanks', [ContactController::class, 'thanks'])->name('thanks');

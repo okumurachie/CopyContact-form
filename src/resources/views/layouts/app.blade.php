@@ -21,6 +21,35 @@
                 </h2>
             </div>
         </div>
+        <nav>
+            <ul class="header-nav">
+                @if (Auth::check())
+                <li class="header-nav__item">
+                    <form class="form" action="/logout" method="post">
+                        @csrf
+                        <button class="header-nav__button">logout</button>
+                    </form>
+                </li>
+                @else
+                @if(request()->is('register'))
+                <li class="header-nav__item">
+                    <a class="header-nav__link" href="/login">login</a>
+                </li>
+                @elseif(request()->is('login'))
+                <li class="header-nav__item">
+                    <a class="header-nav__link" href="/register">register</a>
+                </li>
+                @else
+                <li class="header-nav__item">
+                    <a class="header-nav__link" href="/login">login</a>
+                </li>
+                <li class="header-nav__item">
+                    <a class="header-nav__link" href="/register">register</a>
+                </li>
+                @endif
+                @endif
+            </ul>
+        </nav>
     </header>
 
     <main>
