@@ -9,7 +9,7 @@
 <div class="confirm-content">
     <h2 class="title">Confirm</h2>
 
-    <form class="confirm-table__form" method="POST" action="/">
+    <form class="confirm-table__form" method="POST" action="{{route('send')}}">
         @csrf
         <table class="confirm-table">
             <tr class="confirm-table-row">

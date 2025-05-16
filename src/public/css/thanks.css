@@ -1,0 +1,44 @@
+.thanks-content_box{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.background-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Inika',serif;
+    font-size: 200px;
+    color: rgba(139, 121, 105, 0.05);
+    font-weight: 400;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.thanks-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: #8b7969;
+}
+
+.back-home {
+    display: inline-block;
+    margin-top: 30px;
+    position: relative;
+    padding: 10px 30px;
+    font-size: 14px;
+    font-family: 'Inika', serif;
+    font-weight: 400;
+    color: #fff;
+    background-color: #82756A;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}

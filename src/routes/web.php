@@ -20,4 +20,4 @@ Route::get('/', [ContactController::class, 'index'])->name('contact.form');
 Route::get('/confirm', [ContactController::class, 'showConfirmForm']);
 Route::post('/confirm', [ContactController::class, 'confirm'])->name('confirm');
 Route::post('/send', [ContactController::class, 'send'])->name('send');
-Route::get('thanks', [ContactController::class, 'thanks'])->name('thanks');
+Route::get('/thanks', [ContactController::class, 'thanks'])->name('thanks');

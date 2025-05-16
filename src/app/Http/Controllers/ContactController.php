@@ -43,4 +43,16 @@ class ContactController extends Controller
         $inputs = $validated;
         return view('confirm', (compact('inputs')));
     }
+    public function send(ContactRequest $request)
+    {
+        $validated = $request->validated();
+        $validated['tel'] = $validated['tel1'] . $validated['tel2'] . $validated['tel3'];
+        unset($validated['gender_label'], $validated['category_name']);
+        Contact::create($validated);
+        return redirect()->route('thanks');
+    }
+    public function thanks()
+    {
+        return view('thanks');
+    }
 }
