@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserController extends Controller
 {
@@ -19,18 +20,46 @@ class UserController extends Controller
 
         return redirect('/')->with('message', '会員登録が完了しました');
     }
-    public function showAdminForm()
+    public function showAdminForm(Request $request)
     {
-        $contacts = Contact::all();
+        $genderMap = ['1' => '男性', '2' => '女性', '3' => 'その他'];
+        $query = Contact::query();
+        if ($request->filled('name')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('last_name', 'like', '%' . $request->name . '%')
+                    ->orWhere('first_name', 'like', '%' . $request->name . '%')
+                    ->orWhere('email', 'like', '%' . $request->name . '%');
+            });
+        }
+        if ($request->filled('gender') && $request->gender !== 'all') {
+            $selectedGender = $genderMap[$request->gender] ?? null;
+            if ($selectedGender) {
+                $query->where('gender', $selectedGender);
+            }
+        }
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+        if ($request->filled('created_at')) {
+            $query->whereDate('created_at', $request->created_at);
+        }
+        $contacts = $query->paginate(7);
+        $contacts->getCollection()->transform(function ($contact) use ($genderMap) {
+            $contact->gender = $genderMap[$contact->gender] ?? '不明';
+            return $contact;
+        });
         $categories = Category::all();
-        $contacts = Contact::Paginate(7);
-        return view('admin', compact('categories'));
+
+        return view('admin.admin', compact('contacts', 'categories'));
     }
     public function search(Request $request)
     {
-        $contacts = Contact::with('category')->CategorySearch($request->category_id)->KeywordSearch($request->keyword)->get();
+        $contacts = Contact::with('category')
+            ->CategorySearch($request->category_id)
+            ->KeywordSearch($request->keyword)
+            ->get();
 
         $categories = Category::all();
-        return view('index', compact('contacts', 'categories'));
+        return view('admin.admin', compact('contacts', 'categories'));
     }
 }

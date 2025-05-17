@@ -13,15 +13,16 @@
         </div>
         <div class="admin-form__body">
             <div class="search-item__group">
-                <form action="" class="search-items" method=GET>
+                <form action="{{route('search')}}" class="search-items" method="GET">
                     @csrf
                     <div class="search-item-form__group">
                         <div class="search-name">
-                            <input type="text" name="name" class="name" placeholder="名前やメールアドレスを入力してください" value="">
+                            <input type="text" name="keyword" class="name__input" placeholder="名前やメールアドレスを入力してください" value="{{ request('name') }}">
                         </div>
                         <div class="search-gender">
                             <select name="gender" class="gender__select">
-                                <option value="" hidden>性別</option>
+                                <option value="" hidden {{request('gender') === null ? 'selected' : ''}}>性別</option>
+                                <option value="all" {{ request('gender') === 'all' ? 'selected' : '' }}>全て</option>
                                 <option value="1" class="gender__select__input">男性</option>
                                 <option value="2" class="gender__select__input">女性</option>
                                 <option value="3" class="gender__select__input">その他</option>
@@ -38,7 +39,7 @@
                             </select>
                         </div>
                         <div class="search-date">
-                            <input type="date" name="created_at" class="date-of-contact">
+                            <input type="date" name="created_at" class="date-of-contact" value="{{request('created_at')}}">
                         </div>
                         <div class="form__button__group">
                             <div class="search-form__button">
@@ -54,7 +55,7 @@
             <div class="export-paginate">
                 <p class="export">エクスポート</p>
                 <div class="pagination">
-                    <p>ここにページネートのリンクを貼ります。</p>
+                    {{$contacts->links('vendor.pagination.default')}}
                 </div>
             </div>
             <div class="contact-list__table">
@@ -64,26 +65,26 @@
                         <th class="gender">性別</th>
                         <th class="email">メールアドレス</th>
                         <th class="category">お問い合わせの種類</th>
-                        <th></th>
+                        <th class="detail"></th>
                     </tr>
+                    @php
+                    $genderMap = ['1' => '男性', '2' => '女性', '3' => 'その他'];
+                    @endphp
+
+                    @foreach($contacts as $contact)
                     <tr class="contact__table__row">
-                        <td class="td-name"></td>
-                        <td class="td-gender"></td>
-                        <td class="td-email"></td>
-                        <td class="td-category"></td>
-                        <td class="td-detail"></td>
-                    </tr>
-                    <tr class="contact__table__row">
-                        <td class="td-name">山田 太郎</td>
-                        <td class="td-gender">男性</td>
-                        <td class="td-email">test@example.com</td>
-                        <td class="td-category">商品の交換について</td>
+                        <td class="td-name">{{$contact->last_name . ' ' . $contact->first_name}}</td>
+                        <td class="td-gender">{{ $genderMap[$contact->gender] ?? '不明' }}</td>
+                        <td class="td-email">{{$contact->email}}</td>
+                        <td class="td-category">{{$contact->category->content ?? '不明' }}</td>
                         <td class="td-detail">
-                            <div class="modal__window">
-                                <button class="modal__window__button">詳細</button>
-                            </div>
+                            <form class="show-modal__window" method="GET" action="{{ route('admin.contact', ['id' => $contact->id]) }}">
+                                @csrf
+                                <button type="submit" class="modal__window__button">詳細</button>
+                            </form>
                         </td>
                     </tr>
+                    @endforeach
                 </table>
             </div>
         </div>

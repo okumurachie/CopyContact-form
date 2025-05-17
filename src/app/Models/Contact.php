@@ -27,4 +27,40 @@ class Contact extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function scopeCategorySearch($query, $category_id)
+    {
+        if (!empty($category_id)) {
+            return $query->where('category_id', $category_id);
+        }
+        return $query;
+    }
+    public function scopeKeywordSearch($query, $keyword)
+    {
+        if (!empty($keyword)) {
+            return $query->where(function ($q) use ($keyword) {
+                $q->where('last_name', 'like', "%{$keyword}%")
+                    ->orWhere('first_name', 'like', "%{$keyword}%")
+                    ->orWhere('email', 'like', "%{$keyword}%");
+            });
+        }
+        return $query;
+    }
+    public function scopeGenderSearch($query, $gender)
+    {
+        if (!empty($gender) && $gender !== 'all') {
+            $genderMap = ['1' => '男性', '2' => '女性', '3' => 'その他'];
+            $selectedGender = $genderMap[$gender] ?? null;
+            if ($selectedGender) {
+                return $query->where('gender', $selectedGender);
+            }
+        }
+        return $query;
+    }
+    public function scopeDateSearch($query, $date)
+    {
+        if (!empty($date)) {
+            return $query->whereDate('created_at', $date);
+        }
+        return $query;
+    }
 }

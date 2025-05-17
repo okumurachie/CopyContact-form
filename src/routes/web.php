@@ -23,4 +23,6 @@ Route::post('/send', [ContactController::class, 'send'])->name('send');
 Route::get('/thanks', [ContactController::class, 'thanks'])->name('thanks');
 
 Route::get('/admin', [UserController::class, 'showAdminForm'])->name('admin');
-Route::get('/contacts/search', [UserController::class, 'search']);
+Route::get('/admin/search', [UserController::class, 'search'])->name('search');
+Route::get('/admin/contact/{id}', [ContactController::class, 'showContact'])->name('admin.contact');
+Route::post('/admin/delete/{id}', [ContactController::class, 'softDelete'])->name('contact.softDelete');
