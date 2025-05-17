@@ -14,6 +14,15 @@ html, body {
     height: 100%;
     border-bottom: 1px solid #E0DFDE;
 }
+.header-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    position: absolute;
+    top: 34px;
+    right: 40px;
+}
 .header__logo{
     color: #8b7969;
     font-size: 40px;
@@ -25,7 +34,8 @@ html, body {
     justify-content: center;
     height: 100px;
 }
-.header-nav__button{
+.header-nav__button,
+.header-nav__link{
     display: inline-block;
     width: 98px;
     height: 32px;
@@ -36,25 +46,7 @@ html, body {
     letter-spacing: 0;
     background-color: #d9c6b5;
     text-align: center;
-    position: absolute;
-    top: 34px;
-    left: 1317px;
-    text-decoration: none;
-    color: #8b7969;
-    cursor: pointer;
-}
-.header-nav__link {
-    display: inline-block;
-    width: 98px;
-    height: 32px;
-    border: 1px solid #d9c6b5;
-    font-family: 'Inika', serif;
-    font-size: 20px;
-    line-height: 32px;
-    letter-spacing: 0;
-    background-color: #d9c6b5;
-    text-align: center;
-    position: absolute;
+    position: static;
     top: 34px;
     left: 1317px;
     text-decoration: none;

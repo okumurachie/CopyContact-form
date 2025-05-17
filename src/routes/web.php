@@ -21,3 +21,6 @@ Route::get('/confirm', [ContactController::class, 'showConfirmForm']);
 Route::post('/confirm', [ContactController::class, 'confirm'])->name('confirm');
 Route::post('/send', [ContactController::class, 'send'])->name('send');
 Route::get('/thanks', [ContactController::class, 'thanks'])->name('thanks');
+
+Route::get('/admin', [UserController::class, 'showAdminForm'])->name('admin');
+Route::get('/contacts/search', [UserController::class, 'search']);

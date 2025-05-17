@@ -31,12 +31,22 @@
                     </form>
                 </li>
                 @else
+                @if(request()->is('register'))
+                <li class="header-nav__item">
+                    <a class="header-nav__link" href="/login">login</a>
+                </li>
+                @elseif(request()->is('login'))
+                <li class="header-nav__item">
+                    <a class="header-nav__link" href="/register">register</a>
+                </li>
+                @else
                 <li class="header-nav__item">
                     <a class="header-nav__link" href="/login">login</a>
                 </li>
                 <li class="header-nav__item">
                     <a class="header-nav__link" href="/register">register</a>
                 </li>
+                @endif
                 @endif
             </ul>
         </nav>

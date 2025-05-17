@@ -11,14 +11,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $users = User::all();
-        $categories = Category::all();
-        $contacts = Contact::Paginate(7);
-        return view('index', compact('categories'));
-    }
-
     public function store(UserRequest $request)
     {
         $form = $request->all();
@@ -26,5 +18,19 @@ class UserController extends Controller
         User::create($form);
 
         return redirect('/')->with('message', '会員登録が完了しました');
+    }
+    public function showAdminForm()
+    {
+        $contacts = Contact::all();
+        $categories = Category::all();
+        $contacts = Contact::Paginate(7);
+        return view('admin', compact('categories'));
+    }
+    public function search(Request $request)
+    {
+        $contacts = Contact::with('category')->CategorySearch($request->category_id)->KeywordSearch($request->keyword)->get();
+
+        $categories = Category::all();
+        return view('index', compact('contacts', 'categories'));
     }
 }
