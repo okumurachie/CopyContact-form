@@ -78,17 +78,69 @@
                         <td class="td-email">{{$contact->email}}</td>
                         <td class="td-category">{{$contact->category->content ?? '不明' }}</td>
                         <td class="td-detail">
-                            <form class="show-modal__window" method="GET" action="{{ route('admin.contact', ['id' => $contact->id]) }}">
-                                @csrf
-                                <button type="submit" class="modal__window__button">詳細</button>
-                            </form>
+                            <div class="modal__window">
+                                <a href="{{ route('admin', ['detail' => $contact->id]) }}" class="modal__window__button">詳細</a>
+                            </div>
                         </td>
                     </tr>
                     @endforeach
                 </table>
             </div>
         </div>
+        @if($detailContact)
+        <div class="modal-show">
+            <div id="modal" class="modal_is-active">
+                <div class="modal-content">
+                    <a href="{{ route('admin') }}" class="modal-close-button" aria-label="閉じる">&times;</a>
+                    <div class="modal__content__inner">
+                        <table class="modal__table">
+                            @php
+                            $genderMap = ['1' => '男性', '2' => '女性', '3' => 'その他'];
+                            @endphp
+                            <tr class="modal__table__row">
+                                <th class="modal__table__th">お名前</th>
+                                <td class="modal__table__td">{{ $detailContact->last_name . ' ' . $detailContact->first_name }}</td>
+                            </tr>
+                            <tr class="modal__table__row">
+                                <th class="modal__table__th">性別</th>
+                                <td class="modal__table__td">{{ $genderMap[$detailContact->gender] ?? '不明' }}</td>
+                            </tr>
+                            <tr class="modal__table__row">
+                                <th class="modal__table__th">メールアドレス</th>
+                                <td class="modal__table__td">{{ $detailContact->email }}</td>
+                            </tr>
+                            <tr class=" modal__table__row">
+                                <th class="modal__table__th">電話番号</th>
+                                <td class="modal__table__td">{{ str_replace('-','', $detailContact->tel) }}</td>
+                            </tr>
+                            <tr class="modal__table__row">
+                                <th class="modal__table__th">住所</th>
+                                <td class="modal__table__td">{{ $detailContact->address }}</td>
+                            </tr>
+                            <tr class="modal__table__row">
+                                <th class="modal__table__th">建物名</th>
+                                <td class="modal__table__td">{{ $detailContact->building }}</td>
+                            </tr>
+                            <tr class="modal__table__row">
+                                <th class="modal__table__th">お問い合わせの種類</th>
+                                <td class="modal__table__td">{{ $detailContact->category->content ?? '不明' }}</td>
+                            </tr>
+                            <tr class="modal__table__row">
+                                <th class="modal__table__th">お問い合わせの内容</th>
+                                <td class="modal__table__td">{{ $detailContact->detail }}</< /td>
+                            </tr>
+                        </table>
+                        <form class="delete-contact" action="{{route('contact.softDelete', ['id' => $detailContact->id ])}}" method="post">
+                            @csrf
+                            <div class="delete-contact__button">
+                                <button class="delete-contact__button-submit" type="submit">削除</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            @endif
+        </div>
     </div>
-</div>
 
-@endsection
+    @endsection

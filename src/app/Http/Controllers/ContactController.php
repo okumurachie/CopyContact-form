@@ -55,15 +55,10 @@ class ContactController extends Controller
     {
         return view('thanks');
     }
-    public function showContact($id)
-    {
-        $contact = Contact::with('category')->findOrFail($id);
-        return view('admin.contact', compact('contact'));
-    }
     public function softDelete($id)
     {
         $contact = Contact::findOrFail($id);
         $contact->delete();
-        return redirect('/admin/admin')->with('message', 'お問い合わせ情報を削除しました');
+        return redirect('/admin')->with('message', 'お問い合わせ情報を削除しました');
     }
 }

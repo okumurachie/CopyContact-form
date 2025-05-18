@@ -124,7 +124,8 @@ label{
 .tel2,
 .tel3,
 .address,
-.building{
+.building,
+.category-select{
     height: 100%;
     border: none;
     background-color: #f4f4f4;
@@ -150,9 +151,6 @@ label{
 }
 .category-select option[value=""]{
     color: #beb1a6;
-}
-.category-select {
-    color: #000;
 }
 .form-control{
     width: 331.68px;
@@ -233,6 +231,7 @@ label{
     height: 46px;
     padding: 10px 30px;
     background-color: #82756a;
+    border: none;
     font-family: 'Inika', serif;
     font-weight: 400;
     font-size: 20px;

@@ -61,7 +61,15 @@
         </div>
         @yield('content')
     </main>
-
+    <footer class="footer">
+        <div class="footer__inner">
+            @if (!Auth::check())
+            <div class="footer-nav__item">
+                <a href="/admin" class="footer-nav__link">管理者フォームはこちら</a>
+            </div>
+            @endif
+        </div>
+    </footer>
 </body>
 
 </html>

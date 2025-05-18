@@ -50,7 +50,12 @@ class UserController extends Controller
         });
         $categories = Category::all();
 
-        return view('admin.admin', compact('contacts', 'categories'));
+        $detailContact = null;
+        if ($request->filled('detail')) {
+            $detailContact = Contact::with('category')->find($request->detail);
+        }
+
+        return view('admin.admin', compact('contacts', 'categories', 'detailContact'));
     }
     public function search(Request $request)
     {

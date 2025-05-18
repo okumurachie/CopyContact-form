@@ -25,13 +25,13 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
-                return redirect('/')->with('message', 'ログインに成功しました');
+                return redirect('/admin')->with('message', 'ログインに成功しました');
             }
         });
         $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
             public function toResponse($request)
             {
-                return redirect('/')->with('message', '会員登録が完了しました');
+                return redirect('/admin')->with('message', '会員登録が完了しました');
             }
         });
     }
