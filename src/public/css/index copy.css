@@ -23,11 +23,11 @@
     background-color: #ffffff;
     border: none;
     width: 972px;
+    height: 606px;
     padding-top: 20px;
 }
-label {
+label{
     display: flex;
-    height: 38px;
     align-items: center;
     font-family: 'Inika', serif;
     font-size: 20px;
@@ -35,7 +35,6 @@ label {
     letter-spacing: 0;
     line-height: 1;
     color: #8B7969;
-    width: 253px;
 }
 .required-mark {
     color: red;
@@ -43,28 +42,18 @@ label {
 .name-form__input,
 .email-form__input,
 .address-form__input,
-.building-form__input,
-.gender-form__input,
-.tel-form__input,
-.category-form__input,
-.detail-form__input {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    vertical-align: center;
-    gap: 20px;
-}
-.input-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 618.82px
-}
-.name-inputs{
+.building-form__input{
     width: 100%;
     height: 38px;
     display: flex;
     justify-content: space-between;
+}
+.name-inputs{
+    width: 618.82px;
+    height: 38px;
+    display: flex;
+    justify-self: space-between;
+    gap: 30px;
 }
 .last_name,
 .first_name{
@@ -77,20 +66,16 @@ label {
     color: #beb1a6;
     padding-left: 20px;
 }
-.gender-form__input {
-    width: 100%;
+.gender-form__input{
+    width: 737.06px;
+    height: 26px;
+    display: flex;
+    justify-content: space-between
 }
 .gender-options {
-    width: 100%;
     display: flex;
     align-items: center;
-    
-}
-.gender-option{
-    width: 120px;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
+    gap: 70px;
 }
 .gender-option input[type="radio"]{
     display: none;
@@ -126,6 +111,7 @@ label {
 .address-inputs,
 .building-inputs{
     width: 618.82px;
+    height: 38px;
     background-color: #f4f4f4;
     border: none;
     display: flex;
@@ -141,7 +127,6 @@ label {
 .building,
 .category-select{
     height: 100%;
-    height: 38px;
     border: none;
     background-color: #f4f4f4;
     font-family: 'Inika', serif;
@@ -167,7 +152,7 @@ label {
 .category-select option[value=""]{
     color: #beb1a6;
 }
-.form-control {
+.form-control{
     width: 331.68px;
     height: 38px;
     border: none;
@@ -179,11 +164,33 @@ label {
     display: flex;
     align-items: center;
 }
-.tel-form__input {
+.category-form__input{
     width: 100%;
+    height: 38px;
+    display: flex;
+    gap: 152px;
+}
+
+.detail-form__input{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 152px;
+}
+.detail-input-form{
+    width: 618.82px;
+    height: 129px;
+    border: none;
+    background-color: #f4f4f4;
+    font-family: 'Inika', serif;
+    font-size: 14px;
+    font-weight: 400;
+    padding-left: 20px;
+    padding-top: 10px;
 }
 .tel-inputs {
-    width: 100%;
+    width: 618.82px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -192,6 +199,7 @@ label {
 
 .tel-inputs input.tel {
     width: 178.12px;
+    height: 38px;
     padding: 5px;
     text-align: center;
     font-size: 14px;
@@ -203,6 +211,13 @@ label {
 
 .tel-separator {
     padding: 0 2px;
+}
+.tel-form__input{
+    width: 100%;
+    height: 38px;
+    display: flex;
+    flex-direction: row;
+    gap: 253px;
 }
 .form__button{
     text-align: center;
@@ -226,45 +241,11 @@ label {
     cursor: pointer;
 }
 .form__error {
-    width: 100%;
-    margin-top: 5px;
-    color: #ff0000;
-    font-size: 0.9em;
-    font-family: 'Inika', serif;
-    line-height: 1.2;
-    min-height: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.form__error p {
-    margin: 0;
-    padding: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.category-form__input {
-    width: 100%;
-}
-
-.detail-form__input {
-    width: 100%;
-}
-
-.detail-input-form {
-    width: 100%;
-    height: 129px;
-    border: none;
-    background-color: #f4f4f4;
-    font-family: 'Inika', serif;
+    color: red;
     font-size: 14px;
-    font-weight: 400;
-    padding: 10px 20px;
+    margin-top: 5px;
+    height: 18px;
 }
-
 @media screen and (min-width: 768px) {
     .register-form__content {
     padding: 50px 60px;

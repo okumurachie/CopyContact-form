@@ -1,0 +1,11 @@
+.form__error {
+    min-height: 1.5em;
+    margin-top: 0.5em;
+    color: #ff0000;
+    font-size: 0.9em;
+}
+
+.form__error p {
+    margin: 0;
+    padding: 0;
+} 
