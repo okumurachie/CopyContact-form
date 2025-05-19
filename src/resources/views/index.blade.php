@@ -134,7 +134,7 @@
                 <div class="input-wrapper">
                     <div class="select-wrapper">
                         <select name="category_id" id="category" class="form-control">
-                            <option value="" hidden>選択してください</option>
+                            <option value="" disabled selected hidden>選択してください</option>
                             @foreach($categories as $category)
                             <option class="category-select" value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                                 {{ $category->content }}
