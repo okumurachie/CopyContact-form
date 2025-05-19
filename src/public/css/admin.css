@@ -82,15 +82,19 @@
     color: #ffffff;
     border: none;
     background-color: #8B7969;
+    cursor: pointer;
 }
-.reset-search-form__button input{
+.reset-search-form__button button{
     height: 100%;
+    width: 100%;
     font-family: 'Inika', serif;
     font-size: 18px;
     font-weight: 400;
     color: #ffffff;
     border: none;
+    text-decoration: none;
     background-color: #d9c6b5;
+    cursor: pointer;
 }
 .export-paginate{
     width: 100%;

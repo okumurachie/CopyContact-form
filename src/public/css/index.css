@@ -1,5 +1,6 @@
 .contact-form__content{
     width: 100%;
+    margin: 0 auto;
 }
 .contact-form__heading {
     width: 100%;
@@ -53,7 +54,7 @@ label {
     flex-direction: row;
     align-items: flex-start;
     vertical-align: center;
-    gap: 20px;
+    gap: 80px;
 }
 .input-wrapper {
     display: flex;
@@ -84,7 +85,6 @@ label {
     width: 100%;
     display: flex;
     align-items: center;
-    
 }
 .gender-option{
     width: 120px;

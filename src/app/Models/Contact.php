@@ -48,11 +48,7 @@ class Contact extends Model
     public function scopeGenderSearch($query, $gender)
     {
         if (!empty($gender) && $gender !== 'all') {
-            $genderMap = ['1' => '男性', '2' => '女性', '3' => 'その他'];
-            $selectedGender = $genderMap[$gender] ?? null;
-            if ($selectedGender) {
-                return $query->where('gender', $selectedGender);
-            }
+            return $query->where('gender', $gender);
         }
         return $query;
     }

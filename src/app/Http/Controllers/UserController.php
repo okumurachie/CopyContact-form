@@ -32,10 +32,7 @@ class UserController extends Controller
             });
         }
         if ($request->filled('gender') && $request->gender !== 'all') {
-            $selectedGender = $genderMap[$request->gender] ?? null;
-            if ($selectedGender) {
-                $query->where('gender', $selectedGender);
-            }
+            $query->where('gender', $request->gender);
         }
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
@@ -62,9 +59,15 @@ class UserController extends Controller
         $contacts = Contact::with('category')
             ->CategorySearch($request->category_id)
             ->KeywordSearch($request->keyword)
-            ->get();
+            ->GenderSearch($request->gender)
+            ->DateSearch($request->created_at)
+            ->paginate(7);
 
         $categories = Category::all();
-        return view('admin.admin', compact('contacts', 'categories'));
+        $detailContact = null;
+        if ($request->filled('detail')) {
+            $detailContact = Contact::with('category')->find($request->detail);
+        }
+        return view('admin.admin', compact('contacts', 'categories', 'detailContact'));
     }
 }

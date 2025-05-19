@@ -53,6 +53,13 @@
     </header>
 
     <main class=main-content>
+        <div class="register__alert">
+            @if(session('message'))
+            <div class="register__alert--success">
+                {{session('message')}}
+            </div>
+            @endif
+        </div>
         @yield('content')
     </main>
 

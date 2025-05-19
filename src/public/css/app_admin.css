@@ -44,7 +44,7 @@ html, body {
     cursor: pointer;
 }
 .main-content{
-    background-color: #d9c6b5;
+    background-color: #ede3db;
     min-height: 100vh;
     padding: 20px 10px;
     display: flex;

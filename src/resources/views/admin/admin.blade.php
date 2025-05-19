@@ -17,7 +17,7 @@
                     @csrf
                     <div class="search-item-form__group">
                         <div class="search-name">
-                            <input type="text" name="keyword" class="name__input" placeholder="名前やメールアドレスを入力してください" value="{{ request('name') }}">
+                            <input type="text" name="keyword" class="name__input" placeholder="名前やメールアドレスを入力してください" value="{{ request('keyword') }}">
                         </div>
                         <div class="search-gender">
                             <select name="gender" class="gender__select">
@@ -46,7 +46,7 @@
                                 <button class="search-form__button-submit" type="submit">検索</button>
                             </div>
                             <div class="reset-search-form__button">
-                                <input type="reset" value="リセット">
+                                <button type="button" onclick="location.href='{{ route('admin') }}'">リセット</button>
                             </div>
                         </div>
                     </div>

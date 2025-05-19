@@ -14,7 +14,7 @@
         <table class="confirm-table">
             <tr class="confirm-table-row">
                 <th class="heading">お名前</th>
-                <td class="input">{{ $inputs['last_name'] }} {{ $inputs['first_name'] }}</td>
+                <td class="input">{{ $inputs['last_name'] . '  ' .$inputs['first_name'] }}</td>
             </tr>
             <tr class="confirm-table-row">
                 <th class="heading">性別</th>

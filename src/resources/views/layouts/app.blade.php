@@ -43,13 +43,20 @@
     </header>
 
     <main>
+        <div class="register__alert">
+            @if(session('message'))
+            <div class="register__alert--success">
+                {{session('message')}}
+            </div>
+            @endif
+        </div>
         @yield('content')
     </main>
     <footer class="footer">
         <div class="footer__inner">
             @if (!Auth::check())
             <div class="footer-nav__item">
-                <a href="/admin" class="footer-nav__link">管理者フォームはこちら</a>
+                <a href="{{route('admin')}}" class="footer-nav__link">管理者フォームはこちら</a>
             </div>
             @endif
         </div>
