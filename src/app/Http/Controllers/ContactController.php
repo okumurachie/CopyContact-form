@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use App\Http\Requests\ContactRequest;
 use App\Models\Category;
 use App\Models\Contact;
@@ -60,5 +61,63 @@ class ContactController extends Controller
         $contact = Contact::findOrFail($id);
         $contact->delete();
         return redirect('/admin')->with('message', 'お問い合わせ情報を削除しました');
+    }
+    public function export(Request $request)
+    {
+        $genderMap = ['1' => '男性', '2' => '女性', '3' => 'その他'];
+        $contacts = Contact::with('category')
+            ->CategorySearch($request->category_id)
+            ->KeywordSearch($request->keyword)
+            ->GenderSearch($request->gender)
+            ->DateSearch($request->created_at)
+            ->get();
+        $query = Contact::query();
+        if ($request->filled('name')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('last_name', 'like', '%' . $request->name . '%')
+                    ->orWhere('first_name', 'like', '%' . $request->name . '%')
+                    ->orWhere('email', 'like', '%' . $request->name . '%');
+            });
+        }
+        if ($request->filled('gender') && $request->gender !== 'all') {
+            $query->where('gender', $request->gender);
+        }
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+        if ($request->filled('created_at')) {
+            $query->whereDate('created_at', $request->created_at);
+        }
+        $contacts = $query->get();
+        if ($contacts->isEmpty()) {
+            return redirect()->back()->with('error', 'エクスポート対象のデータがありません。');
+        }
+        $csvHeader = ['ID', '氏名', '性別', 'メールアドレス', 'お問い合わせの種類', '登録日'];
+        $csvData = $contacts->map(function ($contact) use ($genderMap) {
+            return [
+                $contact->id,
+                $contact->last_name . ' ' . $contact->first_name,
+                $contact->email,
+                $genderMap[$contact->gender] ?? '不明',
+                $contact->category->content ?? '',
+                $contact->created_at->format('Y-m-d'),
+            ];
+        });
+        $filename = 'contacts_' . now()->format('Ymd_His') . '.csv';
+
+        $handle = fopen('php://temp', 'r+');
+        fputcsv($handle, $csvHeader);
+        foreach ($csvData as $row) {
+            fputcsv($handle, $row);
+        }
+        rewind($handle);
+
+        $content = stream_get_contents($handle);
+        fclose($handle);
+
+        return Response::make($content, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename={$filename}",
+        ]);
     }
 }
