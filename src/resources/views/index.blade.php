@@ -41,7 +41,7 @@
                 <div class="input-wrapper">
                     <div class="gender-options">
                         <label class="gender-option">
-                            <input type="radio" name="gender" value="1" {{ old('gender') == '1' ? 'checked' : '' }}>
+                            <input type="radio" name="gender" value="1" {{ old('gender','1') == '1' ? 'checked' : '' }}>
                             <span class="custom-radio">男性</span>
                         </label>
                         <label class="gender-option">
@@ -86,8 +86,19 @@
                         <input type="text" name="tel3" class="tel3" placeholder="5678" value="{{ old('tel3') }}">
                     </div>
                     <div class="form__error">
-                        @if ($errors->has('tel1') || $errors->has('tel2') || $errors->has('tel3'))
-                        <p>電話番号を入力してください。</p>
+                        @if (
+                        $errors->has('tel1') || $errors->has('tel2') || $errors->has('tel3')
+                        )
+                        @php
+                        $messages = array_merge(
+                        $errors->get('tel1'),
+                        $errors->get('tel2'),
+                        $errors->get('tel3')
+                        );
+                        $uniqueMessages = collect($messages)->unique();
+                        @endphp
+
+                        <p>{{ $uniqueMessages->implode(' / ') }}</p>
                         @endif
                     </div>
                 </div>
@@ -121,14 +132,16 @@
                     お問い合わせの種類<span class="required-mark">※</span>
                 </label>
                 <div class="input-wrapper">
-                    <select name="category_id" id="category" class="form-control">
-                        <option value="" hidden>選択してください</option>
-                        @foreach($categories as $category)
-                        <option class="category-select" value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                            {{ $category->content }}
-                        </option>
-                        @endforeach
-                    </select>
+                    <div class="select-wrapper">
+                        <select name="category_id" id="category" class="form-control">
+                            <option value="" hidden>選択してください</option>
+                            @foreach($categories as $category)
+                            <option class="category-select" value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->content }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form__error">
                         @error('category_id')
                         <p>{{ $message }}</p>

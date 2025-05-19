@@ -167,6 +167,10 @@ label {
 .category-select option[value=""]{
     color: #beb1a6;
 }
+.select-wrapper {
+    position: relative;
+    width: 331.68px;
+}
 .form-control {
     width: 331.68px;
     height: 38px;
@@ -176,8 +180,22 @@ label {
     font-size: 14px;
     font-weight: 400;
     padding-left: 20px;
+    padding-right: 30px;
     display: flex;
     align-items: center;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.select-wrapper::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12px;
+    color: #beb1a6;
 }
 .tel-form__input {
     width: 100%;
@@ -241,7 +259,7 @@ label {
 .form__error p {
     margin: 0;
     padding: 0;
-    white-space: nowrap;
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
 }
