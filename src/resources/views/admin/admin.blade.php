@@ -53,9 +53,16 @@
                 </form>
             </div>
             <div class="export-paginate">
-                <p class="export">エクスポート</p>
+                <form action="{{route('admin.export')}}" class="admin_export" method="get">
+                    @csrf
+                    <input type="hidden" name="keyword" value="{{ request('keyword') }}">
+                    <input type="hidden" name="gender" value="{{ request('gender') }}">
+                    <input type="hidden" name="category_id" value="{{ request('category_id') }}">
+                    <input type="hidden" name="created_at" value="{{ request('created_at') }}">
+                    <button type="submit" class="csv-export-button">エクスポート</button>
+                </form>
                 <div class="pagination">
-                    {{$contacts->links('vendor.pagination.default')}}
+                    {{$contacts->appends(request()->except('page'))->links('vendor.pagination.default')}}
                 </div>
             </div>
             <div class="contact-list__table">

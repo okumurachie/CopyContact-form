@@ -27,4 +27,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin', [UserController::class, 'showAdminForm'])->name('admin');
     Route::get('/admin/search', [UserController::class, 'search'])->name('search');
     Route::post('/admin/delete/{id}', [ContactController::class, 'softDelete'])->name('contact.softDelete');
+    Route::get('/admin/export', [ContactController::class, 'export'])->name('admin.export');
 });
