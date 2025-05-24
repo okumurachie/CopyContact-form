@@ -37,10 +37,15 @@ class Contact extends Model
     public function scopeKeywordSearch($query, $keyword)
     {
         if (!empty($keyword)) {
-            return $query->where(function ($q) use ($keyword) {
-                $q->where('last_name', 'like', "%{$keyword}%")
-                    ->orWhere('first_name', 'like', "%{$keyword}%")
-                    ->orWhere('email', 'like', "%{$keyword}%");
+            $rowInput = $keyword;
+            $noSpaceInput = str_replace([' ', '　'], '', $rowInput);
+            $query->where(function ($subQuery) use ($rowInput, $noSpaceInput) {
+                $subQuery->where('last_name', 'like', '%' . $rowInput . '%')
+                    ->orWhere('first_name', 'like', '%' . $rowInput . '%')
+                    ->orWhere('email', 'like', '%' . $rowInput . '%')
+                    ->orWhereRaw("REPLACE(REPLACE(CONCAT(last_name, first_name), ' ', ''), '　', '') LIKE ?", ['%' . $noSpaceInput . '%'])
+                    ->orWhereRaw("CONCAT(last_name, ' ', first_name) LIKE ?", ['%' . $rowInput . '%'])
+                    ->orWhereRaw("CONCAT(last_name, '　', first_name) LIKE ?", ['%' . $rowInput . '%']);
             });
         }
         return $query;

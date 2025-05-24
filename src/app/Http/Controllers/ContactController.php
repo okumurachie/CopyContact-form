@@ -27,7 +27,7 @@ class ContactController extends Controller
 
     public function confirm(ContactRequest $request)
     {
-        $validated = $request->validated();
+        $inputs = $request->validated();
 
         if ($request->has('back')) {
             return redirect()
@@ -36,12 +36,11 @@ class ContactController extends Controller
         }
 
         $genderMap = ['1' => '男性', '2' => '女性', '3' => 'その他'];
-        $validated['gender_label'] = $genderMap[$validated['gender']] ?? '未選択';
+        $inputs['gender_label'] = $genderMap[$inputs['gender']] ?? '未選択';
 
-        $validated['tel'] = $validated['tel1'] . $validated['tel2'] . $validated['tel3'];
+        $inputs['tel'] = $inputs['tel1'] . $inputs['tel2'] . $inputs['tel3'];
 
-        $validated['category_name'] = Category::find($validated['category_id'])->content;
-        $inputs = $validated;
+        $inputs['category_name'] = Category::find($inputs['category_id'])->content;
         return view('confirm', (compact('inputs')));
     }
     public function send(ContactRequest $request)
@@ -72,11 +71,14 @@ class ContactController extends Controller
             ->DateSearch($request->created_at)
             ->get();
         $query = Contact::query();
-        if ($request->filled('name')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('last_name', 'like', '%' . $request->name . '%')
-                    ->orWhere('first_name', 'like', '%' . $request->name . '%')
-                    ->orWhere('email', 'like', '%' . $request->name . '%');
+        if ($request->filled('keyword')) {
+            $query->where(function ($subQuery) use ($request) {
+                $fullName = $request->keyword;
+                $subQuery->where('last_name', 'like', '%' . $fullName . '%')
+                    ->orWhere('first_name', 'like', '%' . $fullName . '%')
+                    ->orWhere('email', 'like', '%' . $fullName . '%')
+                    ->orWhereRaw("REPLACE(CONCAT(last_name, first_name), ' ', '') LIKE ?", ['%' . str_replace(' ', '', $fullName) . '%'])
+                    ->orWhereRaw("CONCAT(last_name, ' ', first_name) LIKE ?", ['%' . $fullName . '%']);
             });
         }
         if ($request->filled('gender') && $request->gender !== 'all') {

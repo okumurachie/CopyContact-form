@@ -51,4 +51,12 @@ class UserRequest extends FormRequest
             'password.regex' => 'パスワードを英数字で入力してください',
         ];
     }
+    public function attributes()
+    {
+        return [
+            'name' => 'お名前',
+            'email'   => 'メールアドレス',
+            'password'    => 'パスワード',
+        ];
+    }
 }

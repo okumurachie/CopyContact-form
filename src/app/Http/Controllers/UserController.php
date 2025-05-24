@@ -18,17 +18,22 @@ class UserController extends Controller
         $form['password'] = Hash::make($form['password']);
         User::create($form);
 
-        return redirect('/')->with('message', '会員登録が完了しました');
+        return redirect('/admin')->with('message', '会員登録が完了しました');
     }
     public function showAdminForm(Request $request)
     {
         $genderMap = ['1' => '男性', '2' => '女性', '3' => 'その他'];
         $query = Contact::query();
-        if ($request->filled('name')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('last_name', 'like', '%' . $request->name . '%')
-                    ->orWhere('first_name', 'like', '%' . $request->name . '%')
-                    ->orWhere('email', 'like', '%' . $request->name . '%');
+        if ($request->filled('keyword')) {
+            $rowInput = $request->keyword;
+            $noSpaceInput = str_replace([' ', '　'], '', $rowInput);
+            $query->where(function ($subQuery) use ($rowInput, $noSpaceInput) {
+                $subQuery->where('last_name', 'like', '%' . $rowInput . '%')
+                    ->orWhere('first_name', 'like', '%' . $rowInput . '%')
+                    ->orWhere('email', 'like', '%' . $rowInput . '%')
+                    ->orWhereRaw("REPLACE(REPLACE(CONCAT(last_name, first_name), ' ', ''), '　', '') LIKE ?", ['%' . $noSpaceInput . '%'])
+                    ->orWhereRaw("CONCAT(last_name, ' ', first_name) LIKE ?", ['%' . $rowInput . '%'])
+                    ->orWhereRaw("CONCAT(last_name, '　', first_name) LIKE ?", ['%' . $rowInput . '%']);
             });
         }
         if ($request->filled('gender') && $request->gender !== 'all') {
