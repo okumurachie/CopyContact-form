@@ -64,4 +64,9 @@ class Contact extends Model
         }
         return $query;
     }
+    public function getGenderLabelAttribute()
+    {
+        $genderMap = ['1' => '男性', '2' => '女性', '3' => 'その他'];
+        return $genderMap[$this->gender] ?? '不明';
+    }
 }

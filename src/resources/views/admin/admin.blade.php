@@ -74,14 +74,10 @@
                         <th class="category">お問い合わせの種類</th>
                         <th class="detail"></th>
                     </tr>
-                    @php
-                    $genderMap = ['1' => '男性', '2' => '女性', '3' => 'その他'];
-                    @endphp
-
                     @foreach($contacts as $contact)
                     <tr class="contact__table__row">
                         <td class="td-name">{{$contact->last_name . ' ' . $contact->first_name}}</td>
-                        <td class="td-gender">{{ $genderMap[$contact->gender] ?? '不明' }}</td>
+                        <td class="td-gender">{{$contact->gender_label}}</td>
                         <td class="td-email">{{$contact->email}}</td>
                         <td class="td-category">{{$contact->category->content ?? '不明' }}</td>
                         <td class="td-detail">
@@ -101,16 +97,13 @@
                     <a href="{{ route('admin') }}" class="modal-close-button" aria-label="閉じる">&times;</a>
                     <div class="modal__content__inner">
                         <table class="modal__table">
-                            @php
-                            $genderMap = ['1' => '男性', '2' => '女性', '3' => 'その他'];
-                            @endphp
                             <tr class="modal__table__row">
                                 <th class="modal__table__th">お名前</th>
                                 <td class="modal__table__td">{{ $detailContact->last_name . ' ' . $detailContact->first_name }}</td>
                             </tr>
                             <tr class="modal__table__row">
                                 <th class="modal__table__th">性別</th>
-                                <td class="modal__table__td">{{ $genderMap[$detailContact->gender] ?? '不明' }}</td>
+                                <td class="modal__table__td">{{$detailContact->gender_label}}</td>
                             </tr>
                             <tr class="modal__table__row">
                                 <th class="modal__table__th">メールアドレス</th>

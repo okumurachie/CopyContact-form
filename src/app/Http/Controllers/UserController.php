@@ -46,10 +46,6 @@ class UserController extends Controller
             $query->whereDate('created_at', $request->created_at);
         }
         $contacts = $query->paginate(7);
-        $contacts->getCollection()->transform(function ($contact) use ($genderMap) {
-            $contact->gender = $genderMap[$contact->gender] ?? '不明';
-            return $contact;
-        });
         $categories = Category::all();
 
         $detailContact = null;

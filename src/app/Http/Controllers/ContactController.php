@@ -72,13 +72,15 @@ class ContactController extends Controller
             ->get();
         $query = Contact::query();
         if ($request->filled('keyword')) {
-            $query->where(function ($subQuery) use ($request) {
-                $fullName = $request->keyword;
-                $subQuery->where('last_name', 'like', '%' . $fullName . '%')
-                    ->orWhere('first_name', 'like', '%' . $fullName . '%')
-                    ->orWhere('email', 'like', '%' . $fullName . '%')
-                    ->orWhereRaw("REPLACE(CONCAT(last_name, first_name), ' ', '') LIKE ?", ['%' . str_replace(' ', '', $fullName) . '%'])
-                    ->orWhereRaw("CONCAT(last_name, ' ', first_name) LIKE ?", ['%' . $fullName . '%']);
+            $rowInput = $request->keyword;
+            $noSpaceInput = str_replace([' ', '　'], '', $rowInput);
+            $query->where(function ($subQuery) use ($rowInput, $noSpaceInput) {
+                $subQuery->where('last_name', 'like', '%' . $rowInput . '%')
+                    ->orWhere('first_name', 'like', '%' . $rowInput . '%')
+                    ->orWhere('email', 'like', '%' . $rowInput . '%')
+                    ->orWhereRaw("REPLACE(REPLACE(CONCAT(last_name, first_name), ' ', ''), '　', '') LIKE ?", ['%' . $noSpaceInput . '%'])
+                    ->orWhereRaw("CONCAT(last_name, ' ', first_name) LIKE ?", ['%' . $rowInput . '%'])
+                    ->orWhereRaw("CONCAT(last_name, '　', first_name) LIKE ?", ['%' . $rowInput . '%']);
             });
         }
         if ($request->filled('gender') && $request->gender !== 'all') {
