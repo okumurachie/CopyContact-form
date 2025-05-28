@@ -41,12 +41,49 @@
 }
 .search-gender{
     width: 102.48px;
+    position: relative;
+}
+.gender__select,
+.form-control{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.search-gender::after,
+.search-category::after{
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12px;
+    color: #beb1a6;
+
 }
 .search-category{
     width: 223.04px;
+    position: relative;
 }
 .search-date{
     width: 148.87px;
+}
+.date-of-contact{
+    position: relative;
+}
+.date-of-contact::-webkit-calendar-picker-indicator{
+    background: transparent;
+    z-index:1;
+}
+.date-of-contact::after{
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 12px;
+    color: #beb1a6;
 }
 .search-items input,
 .search-items select{

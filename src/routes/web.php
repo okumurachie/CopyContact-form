@@ -16,6 +16,9 @@ use App\Http\Controllers\ContactController;
 */
 
 
+Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [UserController::class, 'store'])->name('register.store');
+
 Route::get('/', [ContactController::class, 'index'])->name('contact.form');
 Route::get('/confirm', [ContactController::class, 'showConfirmForm']);
 Route::post('/confirm', [ContactController::class, 'confirm'])->name('confirm');

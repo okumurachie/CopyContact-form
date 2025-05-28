@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
+use App\Http\Requests\LoginRequest as CustomLoginRequest;
 use App\Actions\Fortify\CreateNewUser;
-use App\Actions\Fortify\ResetUserPassword;
-use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -14,6 +17,7 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Contracts\RegisterResponse;
+
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -45,7 +49,6 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::registerView(function () {
             return view('auth.register');
         });
-
         Fortify::loginView(function () {
             return view('auth.login');
         });
@@ -55,5 +58,6 @@ class FortifyServiceProvider extends ServiceProvider
 
             return Limit::perMinute(10)->by($email . $request->ip());
         });
+        $this->app->bind(FortifyLoginRequest::class, CustomLoginRequest::class);
     }
 }

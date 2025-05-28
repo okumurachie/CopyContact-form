@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => [
                 'required',
                 'string',
@@ -44,10 +44,10 @@ class UserRequest extends FormRequest
             'email.string' => 'メールアドレスを文字列で入力してください',
             'email.email' => 'メールアドレスは「ユーザー名@ドメイン」形式で入力してください',
             'email.max' => 'メールアドレスを255文字以下で入力してください',
+            'email.unique' => 'このメールアドレスは既に登録されています。',
             'password.required' => 'パスワードを入力してください',
             'password.string' => 'パスワードを文字列で入力してください',
             'password.min' => 'パスワードを8文字以上で入力してください',
-            'password.confirmed' => '入力されたパスワードが一致していません',
             'password.regex' => 'パスワードを英数字で入力してください',
         ];
     }

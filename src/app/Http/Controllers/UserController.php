@@ -8,16 +8,21 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserController extends Controller
 {
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
     public function store(UserRequest $request)
     {
-        $form = $request->all();
+        $form = $request->validated();
         $form['password'] = Hash::make($form['password']);
-        User::create($form);
-
+        $user = User::create($form);
+        Auth::login($user);
         return redirect('/admin')->with('message', '会員登録が完了しました');
     }
     public function showAdminForm(Request $request)
