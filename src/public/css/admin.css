@@ -236,7 +236,6 @@ td{
     font-size: 18px;
     font-weight: 400;
     text-decoration: none;
-    
 }
 .custom-pagination-nav {
     display: flex;
@@ -280,9 +279,6 @@ td{
 }
 .custom-pagination a:hover {
     background-color: #eee;
-}
-.modal {
-    display: none;
 }
 .modal-show {
     position: fixed;
@@ -335,7 +331,7 @@ td{
     font-family: 'Inika', serif;
     font-size: 20px;
     color: #8b7969;
-    font-weight: 700px;
+    font-weight: 700;
 }
 .modal__table__row:last-child th,
 .modal__table__row:last-child td{

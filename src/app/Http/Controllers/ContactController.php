@@ -46,7 +46,7 @@ class ContactController extends Controller
     public function send(ContactRequest $request)
     {
         $validated = $request->validated();
-        $validated['tel'] = $validated['tel1'] . $validated['tel2'] . $validated['tel3'];
+        $validated['tel'] = $validated['tel1'] . '-' . $validated['tel2'] . '-' . $validated['tel3'];
         unset($validated['gender_label'], $validated['category_name']);
         Contact::create($validated);
         return redirect()->route('thanks');
